@@ -1,0 +1,7 @@
+<%= turbo_frame_tag dom_id(post) do %>
+  <div class="border flex-col mt-2">
+    ID: <%= post.id %><br>
+    Name: <%= post.title %><br>
+    Body :<%= post.body %>
+  </div>
+<% end %>

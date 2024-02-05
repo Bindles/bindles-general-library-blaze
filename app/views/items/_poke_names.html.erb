@@ -1,0 +1,7 @@
+<!-- app/views/pokemon/_pokemon_names.html.erb -->
+<%= @item.inspect %>
+<%= @pokemon_data['results'][0]['name'].inspect %>
+<%#= turbo_stream.update "tst", @item.pass = @pokemon_data['results'][0]['name'].inspect  %>
+<% @pokemon_data['results'].each do |poke| %>
+  <p><%= poke['name'].capitalize %></p>
+<% end %>

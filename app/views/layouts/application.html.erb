@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HotwireInfinite</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application.tailwind", "inter-font", "data-turbo-track": "reload" %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%#= javascript_include_tag 'custom/main' %>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="https://unpkg.com/htmx.org@1.9.5" integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  </head>
+
+  <body>
+    <div class="flash-notice"></div>
+    <main class="container px-5 mx-auto mt-4">
+    <%= @params.inspect %>
+    app: <br>
+    Last Item[s]<%#= session[:last_item_name]["name"].inspect %><%#= session[:last_item_name]["body"].inspect %><br>
+    Item: <%= @item.inspect  %><br>
+    <%#= session[:current_item] %>
+      <%= yield %>
+    </main>
+  </body>
+</html>

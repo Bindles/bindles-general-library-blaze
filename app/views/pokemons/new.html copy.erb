@@ -1,0 +1,28 @@
+<div class="mx-auto md:w-2/3 w-full">
+  <h1 class="font-bold text-4xl">New pokemon</h1>
+
+<%# <meta name="turbo-visit-control" content="reload">
+
+<!-- or -->
+
+<%= turbo_page_requires_reload %> %>
+<%= turbo_frame_tag 'gt' do %>
+  <!-- This content will be replaced by the partial -->
+<% end %>
+
+<%= turbo_frame_tag 'partial_frame' do %>
+  <!-- This content will be replaced by the partial -->
+<% end %>
+
+  <!-- new.html.erb -->
+<%= form_with(url: new_pokemon_path, method: :get) do |form| %>
+  <%= form.submit "Fetch Pokémon", name: "fetch_pokemon" %>
+<% end %>
+
+<%= turbo_stream.update "gt", params.inspect +   params[:pokemons].inspect %>
+
+
+  <%= render "form", pokemon: @pokemon %>
+
+  <%= link_to "Back to pokemons", pokemons_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+</div>

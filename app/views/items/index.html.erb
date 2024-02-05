@@ -1,0 +1,77 @@
+<script>
+  var jk = '<%= Item.accesses %>'
+</script>
+
+<div class="w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+
+<a href="#" onclick="this.style.backgroundColor='#990000'">Paint it red</a>
+<a href="#" onclick="this.style.backgroundColor='#009900';this.style.color='#FFFFFF';">Paint it green</a>
+Last Item: <%= session[:last_item].inspect %>
+<%#= session[:current_item] %>
+Items.find(1)<%= @items[0].inspect %>
+Params[ALL]: 
+  <%= params.inspect%> <br>
+  Params[:controller]: 
+  <%= params[:controller].inspect %> <br>
+  Params[:action]: 
+  <%= params[:action].inspect %> <br>
+    Params[q]:
+  <%= params[:q].inspect %> <br><br>
+
+    Params[myparam]:
+  <%= params[:myparam].inspect %> <br>
+  <%= params %><br>
+  <form action="/items">
+    <input name="myparam" type="text">
+    <button type="submit">Search</button>
+  </form>
+
+
+  par book<%= params[:book] %> <br>
+  par book<%= params[:book] %> <br>
+<%# form_for(@book) with a few fields generates something like this %>
+<form action="/items">
+  <input type="text" name="book[title]" id="book_title">
+  <input type="text" name="book[author]" id="book_author">
+  <input type="text" name="book[cover]" id="book_cover">
+
+  <select name="book[language]" id="book_language">
+    <option value="English">English</option>
+    <option value="Spanish">Spanish</option>
+    <option value="French">French</option>
+  </select>
+
+  <button type="submit">Create</button>
+</form>
+<br>
+  param :item <%= params[:item].inspect %><br>
+  param :item <%= params[:item] %><br>
+<%# form_for(@book) with a few fields generates something like this %>
+<form action="/items" method="post">
+  <input type="text" name="item[name]" id="item_name">
+  <input type="text" name="item[body]" id="item_body">
+
+  <select name="item[access]" id="item_accss">
+    <option value="draft">English</option>
+    <option value="Spanish">Spanish</option>
+    <option value="French">French</option>
+  </select>
+
+  <button type="submit">Create</button>
+</form>
+
+
+
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Items</h1>
+    <%= link_to "New item", new_item_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  </div>
+
+  <div id="items" class="min-w-full">
+    <%= render @items %>
+  </div>
+</div>

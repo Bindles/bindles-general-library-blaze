@@ -1,0 +1,7 @@
+<%= turbo_frame_tag dom_id(product) do %>
+  <div class="border flex-col mt-2">
+    <%= product.id %><br>
+    Name: <%= product.name %><br>
+Body :<%= product.desc %>
+  </div>
+<% end %>

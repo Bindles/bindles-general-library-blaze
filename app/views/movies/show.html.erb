@@ -1,0 +1,37 @@
+<!-- movies/show.html.erb -->
+<div class="mx-auto md:w-2/3 w-full flex">
+  <div class="mx-auto">
+    <% if notice.present? %>
+      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <% end %>
+<div id="posts">
+    <%= render @movie %>
+</div>
+
+    <%= link_to "Edit this movie", edit_movie_path(@movie), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <div class="inline-block ml-2">
+      <%= button_to "Destroy this movie", movie_path(@movie), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+    </div>
+    <%= link_to "Back to movies", movies_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  </div>
+</div>
+
+
+
+<%=render 'form', movie: @movie %>
+
+<%= turbo_frame_tag 'partial_frame' do %>
+  <!-- This content will be replaced by the partial -->
+<% end %>
+<%= link_to 'Turbo mlp', mlp_path, data: { turbo_frame: :partial_frame }%>
+<%#= link_to 'Turbo mlp', mlpf_path(movie: @movie), data: { turbo_frame: :partial_frame }%>
+<%= link_to 'Turbo mlp', mlpf_path(midparam: @movie, type: 1), data: { turbo_frame: :partial_frame }%>
+<!-- movies/show.html.erb                movie_id: @movie.id    -->
+<%= link_to 'Edit this movie', mlpf_path(midparam: params[:id], type: 2), remote: true, class: 'mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium' %>
+<%#= link_to 'Edit this movie', mlpf_path(type: params[:id]), remote: true, class: 'mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium' %>
+
+<br>
+aa<br>
+<%= turbo_frame_tag 'modal_frame' do %>
+  <!-- This content will be replaced by the partial -->
+<% end %>

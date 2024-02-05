@@ -1,0 +1,17 @@
+<!-- |_posts.erb| -->
+<div id="posts">
+  <% @movies.each do |movie| %>
+    <%= render movie %>
+    <p>
+      <%= link_to "Show this movie", movie %>
+    </p>
+  <% end %>
+</div>
+
+
+<!-- |_posts.erb| -->
+<div id="posts">
+
+    <%= render @movie %>
+
+</div>

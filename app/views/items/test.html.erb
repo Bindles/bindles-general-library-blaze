@@ -1,0 +1,76 @@
+<!--
+h1 {
+  text-align: center;
+  font-size: 2em;
+  margin: 20px 0;
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  border: none;
+  background-color: #00bcd4;
+  color: white;
+}
+
+
+<h1 data-turbo-frame>The current time is: <%= @time %></h1>
+
+<%= turbo_frame_tag do %>
+  <%= button_to "Refresh Time", test_path, method: :get, data: { turbo: "replace" } %>
+<% end %>
+
+
+<div data-controller="pokemon"></div>
+-->
+
+<div data-controller="pokemon">
+  <!-- Button to trigger fetch action -->
+  <button data-action="click->pokemon#fetchPokemonData" data-target="pokemon.submitBtn">Fetch Pokemon</button>
+
+  <!-- Container to display fetched data -->
+  <div data-target="pokemon.output"></div>
+</div>
+
+
+
+
+<turbo-frame id="messages">
+
+</turbo-frame>
+
+<%= turbo_stream.update "messages", @items[2]["name"] %> 
+
+<%= turbo_frame_tag 'partial_frame' do %>
+  <!-- This content will be replaced by the partial -->
+<% end %>
+
+<%= link_to 'lp', lp_path, data: { turbo_frame: :partial_framezz }%> <%#  %>
+<!-- app/views/posts/show.html.erb -->
+<%= button_to 'Load Partial', lp_path, method: :post, remote: true %>
+
+
+
+
+
+
+
+<!-- app/views/items/test.html.erb 
+<div data-controller="pokemon">
+  <button data-action="click->pokemon#fetchPokemon">Fetch Pokemon</button>
+  <div class="pokemon-list"></div>
+</div>
+-->
+
+<!-- app/views/items/test.html.erb 
+<div data-controller="pokemon">
+  Button to fetch Pokemon 
+  <button data-action="click->pokemon#fetchPokemon">Fetch Pokemon</button>
+  Container for fetched data 
+  <div class="pokemon-list"></div>
+</div>
+-->
+

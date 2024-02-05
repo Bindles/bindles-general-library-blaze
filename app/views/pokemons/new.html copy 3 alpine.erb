@@ -1,0 +1,117 @@
+<div class="mx-auto md:w-2/3 w-full">
+  <h1 class="font-bold text-4xl">New pokemon</h1>
+
+<%# <meta name="turbo-visit-control" content="reload">
+
+<!-- or -->
+
+<%= turbo_page_requires_reload %> %>
+
+
+
+  <%# if @pokemon_data && @pokemon_data["results"] && @pokemon_data["results"].any?  && item.poke? %>
+      <%# pokemon_name = @pokemon_data["results"][1]["name"] %>
+      <%# pokemon_name = @pokemon_data_which %>
+      <%# item.pass = pokemon_name %>
+      <%#= turbo_stream.update "tst", "Pass set to: #{pokemon_name}" %>
+      
+<%= turbo_frame_tag 'gta' do %>
+  <!-- This content will be replaced by the partial -->
+<% end %>
+
+
+<%= turbo_frame_tag 'gto' do %>
+  <!-- This content will be replaced by the partial -->
+  <% if @data %>
+    <%#= turbo_stream.update "gta", 'hi' %>
+    <%= turbo_stream.update "gto", @pokemon.url = @data["results"][0]["url"] %>
+    <%= turbo_stream.append "gto" do %>
+      <% @data['results'].each do |result| %>
+        Name: <%= result['name'] %><br>
+        Url: <%= result['url'] %><br>
+        <%= link_to "Set Category", "#", class: "set-category", data: { name: result['name'] }, remote: true, onclick: "document.getElementById('pokemon_category').value = '#{result['name']}'" %><br>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+
+
+
+
+<%= turbo_frame_tag 'gt' do %>
+  <!-- This content will be replaced by the partial -->
+<% end %>
+
+<%= turbo_frame_tag 'partial_frame' do %>
+  <!-- This content will be replaced by the partial -->
+<% end %>
+
+    Params[fetch_pokemon]:
+  <%= params[:fetch_pokemon].inspect %> <br>
+  <%= params %><br>
+  <form action="/pokemons/new">
+    <input name="fetch_pokemon" type="text">
+    <button type="submit">Search</button>
+  </form>
+
+  <!-- new.html.erb -->
+<%= form_with(url: new_pokemon_path, method: :get) do |form| %>
+  <%= form.submit "Fetch Pokémon", name: "fetch_pokemon" %>
+<% end %>
+
+<!-- new.html.erb -->
+<form action="/pokemons/new" method="get">
+  <input type="submit" value="true" name="fetch_pokemon">
+</form>
+
+<form action="/pokemons/new" method="get">
+  <select name="fetch_pokemon" id="fetch_pokemon">
+    <option value="Fetch Pokémon">English</option>
+    <option value="Fetch Pokémon">Spanish</option>
+    <option value="French">French</option>
+  </select>
+  <input type="submit">
+  </form>
+
+
+<%= form_with(url: pokemons_path, method: :post) do |form| %>
+  <div class="field">
+    <%= form.label :access %>
+    <%= form.select :access, Pokemon.accesses, prompt: "Select Pokemon Type", id: "pokemon-access" %>
+  </div>
+  
+  <div class="field" id="sub-access" style="display: none;">
+    <%= form.label :sub_access %>
+    <%= form.select :sub_access, Pokemon.sub_accesses.keys.map { |sub_access| [sub_access.titleize, sub_access] }, prompt: "Select Pokemon Species", id: "pokemon-sub-access" %>
+  </div>
+
+  <%= form.submit %>
+<% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var accessSelect = document.getElementById("access");
+    var subAccessDiv = document.getElementById("sub-access");
+
+    accessSelect.addEventListener("change", function() {
+      var selectedAccess = this.value;
+      if (selectedAccess === "poke") {
+        subAccessDiv.style.display = "block";
+        console.log('poke')
+      } else {
+        subAccessDiv.style.display = "none";
+      }
+    });
+  });
+</script>
+
+
+
+<%= turbo_stream.update "gt", params.inspect +   params[:pokemons].inspect %>
+
+
+  <%= render "form", pokemon: @pokemon %>
+
+  <%= link_to "Back to pokemons", pokemons_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+</div>
