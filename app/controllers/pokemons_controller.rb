@@ -15,6 +15,7 @@ require 'net/http'
 
   # GET /pokemons/new
 def new
+  #@data = nil
   @abc=1
   @pokemon = Pokemon.new
   if params[:fetch_pokemon].present?
@@ -27,7 +28,8 @@ end
 
 def fetchpokemon(pokemon)
   # Make HTTP request to fetch Pokémon data
-  url = URI("https://pokeapi.co/api/v2/pokemon?limit=3")
+  url = URI("https://pokeapi.co/api/v2/pokemon?limit=177")
+  
   response = Net::HTTP.get(url)
   @data = JSON.parse(response)
 
@@ -37,6 +39,20 @@ def fetchpokemon(pokemon)
   # Set the attributes of the pokemon to the name of the first Pokémon
   pokemon.name = @first_pokemon_name
   puts params[:fetch_pokemon].to_i.class.inspect
+
+  # Fetch Pokemon names and store them in `pokemon_names` array
+p 'each'
+pokemon_names = @data["results"].map { |result| result["name"] }
+#p pokemon_names
+
+url = URI("https://pokeapi.co/api/v2/pokemon/1/")
+  
+response = Net::HTTP.get(url)
+@dataz = JSON.parse(response)
+
+# Dynamically define the enum using the fetched Pokemon names
+#Pokemon.define_pokemon_enum(pokemon_names)
+
 
   # Render the form with updated data using Turbo Streams
   #render turbo_stream: turbo_stream.append('partial_frame', partial: 'forma')

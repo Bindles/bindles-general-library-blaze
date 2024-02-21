@@ -12,6 +12,7 @@
   </div>
 
   <%= form.submit %>
+<% end %>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
@@ -46,8 +47,7 @@
     </div>
   </div>
 
-  <%= form.submit %>
-<% end %>
+
 
 ### <= ALPINE END
 

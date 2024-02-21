@@ -31,6 +31,7 @@ export default class extends Controller {
       this.postsTarget.insertAdjacentHTML("beforeend", spinner);
 
       this.#loadRecords();
+      console.log('scroll')
     }
   }
 

@@ -1,3 +1,8 @@
+<script>
+  var jsdata = <%= @data.to_json.html_safe %>;
+  console.log(jsdata);
+</script>
+
 <div class="mx-auto md:w-2/3 w-full">
   <h1 class="font-bold text-4xl">New pokemon</h1>
 
@@ -37,8 +42,6 @@
 
 
 
-
-
 <%= turbo_frame_tag 'gt' do %>
   <!-- This content will be replaced by the partial -->
 <% end %>
@@ -47,9 +50,12 @@
   <!-- This content will be replaced by the partial -->
 <% end %>
 
-    Params[fetch_pokemon]:
+<br>
+    Params[] : 
+  <%= params.inspect %><br>
+    Params[fetch_pokemon] : 
   <%= params[:fetch_pokemon].inspect %> <br>
-  <%= params %><br>
+
   <form action="/pokemons/new">
     <input name="fetch_pokemon" type="text">
     <button type="submit">Search</button>
@@ -67,30 +73,70 @@
 
 <form action="/pokemons/new" method="get">
   <select name="fetch_pokemon" id="fetch_pokemon">
-    <option value="Fetch Pokémon">English</option>
-    <option value="Fetch Pokémon">Spanish</option>
-    <option value="French">French</option>
+    <option value="1">Pokemon1</option>
+    <option value="2">Pokemon2</option>
+    <option value="3">Pokemon2</option>
   </select>
   <input type="submit">
   </form>
 
+  <form action="/pokemons/new" method="get">
+  <select name="fetch_pokemon" id="fetch_pokemon">
+    <% if @data.present? %>
+      
+      <% @data['results'].each_with_index do |pokemon, index| %>
+        <option value="<%= index %>"><%= pokemon['name'].capitalize %></option>
+      <% end %>
+    <% else %>
+      <option value="">No Pokemon found</option>
+    <% end %>
+  </select>
+  <input type="submit">
+</form>
+
+<% @dat = "hi", "man", "bye" %>
+<%= @aaaa %>
+
 
 <%= form_with(url: pokemons_path, method: :post) do |form| %>
-  <div x-data="{ showSubAccess: false }">
-    <div class="field">
-      <%= form.label :access %>
-      <%= form.select :access, Pokemon.accesses, { prompt: "Select Pokemon Type", id: "pokemon-access" }, { '@change' => "showSubAccess = ($event.target.value === 'poke')" } %>
-    </div>
-    
-    <div class="field" id="sub-access" x-show="showSubAccess">
-      <%= form.label :sub_access %>
-      <%= form.select :sub_access, Pokemon.sub_accesses.keys.map { |sub_access| [sub_access.titleize, sub_access] }, { prompt: "Select Pokemon Species", id: "pokemon-sub-access" } %>
-    </div>
+  <div class="field">
+    <%= form.label :access %>
+    <%= form.select :access, Pokemon.accesses, prompt: "Select Pokemon Type", id: "pokemon-access" %>
+  </div>
+  
+  <div class="field" id="sub-access" style="display: none;">
+    <%= form.label :sub_access %>
+    <% if @data %>
+      <%= form.select :sub_access, options_for_select(@data["results"].map { |result| [result["name"].capitalize, result["name"]] }), prompt: "Select Pokemon Species", id: "pokemon-sub-access" %>
+    <% else %>
+      <%= form.select :sub_access, options_for_select(@dat.map.with_index { |result, index| ["#{result.capitalize} #{index.inspect}", 2] }), prompt: "Select Pokemon Species", id: "pokemon-sub-access" %>
+    <% end %>
   </div>
 
   <%= form.submit %>
 <% end %>
 
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var accessSelect = document.getElementById("access");
+    var subAccessDiv = document.getElementById("sub-access");
+
+    accessSelect.addEventListener("change", function() {
+      var selectedAccess = this.value;
+      if (selectedAccess === "poke") {
+        subAccessDiv.style.display = "block";
+        console.log('poke')
+      } else {
+        subAccessDiv.style.display = "none";
+      }
+    });
+  });
+</script>
+
+<% if @dataz.present? %>
+  <%= @dataz['abilities'] %>
+<% end%>
 
 
 
