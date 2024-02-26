@@ -28,11 +28,12 @@
 <%= turbo_frame_tag 'gto' do %>
   <!-- This content will be replaced by the partial -->
   <% if @data %>
+    <%= @data['results'][0].inspect %>
     <%#= turbo_stream.update "gta", 'hi' %>
     <%= turbo_stream.update "gto", @pokemon.url = @data["results"][0]["url"] %>
     <%= turbo_stream.append "gto" do %>
       <% @data['results'].each do |result| %>
-        Name: <%= result['name'] %><br>
+        Name: <%= result['name'] %> <%= result['name'] %> <br>
         Url: <%= result['url'] %><br>
         <%= link_to "Set Category", "#", class: "set-category", data: { name: result['name'] }, remote: true, onclick: "document.getElementById('pokemon_category').value = '#{result['name']}'" %><br>
       <% end %>
@@ -55,6 +56,11 @@
   <%= params.inspect %><br>
     Params[fetch_pokemon] : 
   <%= params[:fetch_pokemon].inspect %> <br>
+
+  <% if @sel_poke%>
+  <%= @sel_poke.inspect %>
+  <%= @sel_poke['id'] %>
+  <% end %>
 
   <form action="/pokemons/new">
     <input name="fetch_pokemon" type="text">
@@ -135,7 +141,11 @@
 </script>
 
 <% if @dataz.present? %>
+  <%= @dataz['name'] %>
+  <%= @dataz['id'] %>
   <%= @dataz['abilities'] %>
+  <img src="<%= @dataz['sprites']['front_default'] %>" alt="">
+  <%= @dataz['sprites']['front_default'].inspect %>
 <% end%>
 
 

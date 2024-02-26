@@ -22,19 +22,20 @@ def new
     @abc+=1
     fetchpokemon(@pokemon) 
     p @first_pokemon_name.inspect
-    p @data["results"][0]["name"].inspect
+    p @data["results"][0].inspect
   end
 end
 
 def fetchpokemon(pokemon)
   # Make HTTP request to fetch Pokémon data
-  url = URI("https://pokeapi.co/api/v2/pokemon?limit=177")
+  url = URI("https://pokeapi.co/api/v2/pokemon?limit=7")
   
   response = Net::HTTP.get(url)
   @data = JSON.parse(response)
 
   # Extract the name of the first Pokémon from the data
   @first_pokemon_name = @data["results"][params[:fetch_pokemon].to_i]["name"]
+  @sel_poke = @data["results"][params[:fetch_pokemon].to_i]
 
   # Set the attributes of the pokemon to the name of the first Pokémon
   pokemon.name = @first_pokemon_name
@@ -45,7 +46,8 @@ p 'each'
 pokemon_names = @data["results"].map { |result| result["name"] }
 #p pokemon_names
 
-url = URI("https://pokeapi.co/api/v2/pokemon/1/")
+#INDIVIDUAL POKEMON DATA FETCHING
+url = URI("https://pokeapi.co/api/v2/pokemon/#{params[:fetch_pokemon].to_i}/")
   
 response = Net::HTTP.get(url)
 @dataz = JSON.parse(response)
